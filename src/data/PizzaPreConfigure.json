@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Margarita",
+    "image": "assests/margarita.png",
+    "priceList": [{ "size": "small", "price": "7" }, { "size": "medium", "price": "10" }, { "size": "big", "price": "13" }]
+  },
+  {
+    "name": "Carbonara",
+    "image": "assests/carbonara.png",
+    "priceList": [{ "size": "small", "price": "8" }, { "size": "medium", "price": "11" }, { "size": "big", "price": "14" }]
+  },
+  {
+    "name": "Barbecue",
+    "image": "assests/barbacoa.png",
+    "priceList": [{ "size": "small", "price": "9" }, { "size": "medium", "price": "13" }, { "size": "big", "price": "16" }]
+  }
+]

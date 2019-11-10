@@ -1,0 +1,99 @@
+.pizzaContent img {
+  width: 50%;
+  align-self: center;
+  padding-left: 50px;
+}
+
+.pizzaContent {
+  display: inline-block;
+}
+
+.pizzaContent p {
+  font-family: 'New Century Schoolbook', TeX Gyre Schola, serif;
+  text-align: center;
+  font-size: 1.4em;
+  height: 45px;
+  margin: 0 110px 5px 0;
+}
+
+.pizzaContent button {
+  box-shadow: inset 0px 39px 0px -24px #e67a73;
+  background-color: #e4685d;
+  border-radius: 4px;
+  border: 1px solid #ffffff;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 15px;
+  padding: 6px 15px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #b23e35;
+}
+.pizzaContent button:hover {
+  background-color: #eb675e;
+}
+.pizzaContent button:active {
+  position: relative;
+  top: 1px;
+}
+
+#PizzaPreConfigure {
+  margin-right: 38%;
+}
+#ShoppingCart {
+  margin-top: -250px;
+  width: 680px;
+  height: auto;
+  padding-bottom: 20px;
+  background: #c53030;
+  border-radius: 6px;
+  margin-left: 1200px;
+}
+
+#productList div p {
+  display: inline;
+}
+
+h1 {
+  font-weight: 100;
+}
+#productList {
+  background-color: #ffffff;
+  width: 630px;
+  height: auto;
+  margin-left: 22px;
+  border-radius: 6px;
+}
+#productList div {
+  height: 40px;
+}
+
+.total h3 {
+  display: inline;
+}
+.total {
+  margin-left: 550px;
+  margin-top: 30px;
+}
+
+.titleLabels div {
+  display: inline;
+  margin-left: 100px;
+}
+
+.pizzaSize {
+  margin-left: 75px;
+}
+
+.pizzaName {
+  margin-left: 70px;
+}
+
+.pizzaPrice {
+  margin-left: 110px;
+}
+
+#pizzaCount {
+  margin-left: 140px;
+}

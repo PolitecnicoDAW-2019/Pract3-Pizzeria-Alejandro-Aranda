@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="assests/style.css" />
+    <title>Pizzeria</title>
+  </head>
+  <body>
+    <div id="PizzaPreConfigure"></div>
+    <div id="ShoppingCart">
+      <h1>Shopping Cart</h1>
+      <div class="titleLabels">
+        <div>Name</div>
+        <div>Size</div>
+        <div>Price</div>
+        <div>Count</div>
+      </div>
+      <div id="productList"></div>
+      <div class="total">
+        <h3>Total :</h3>
+        <h3 id="totalPrice">0</h3>
+      </div>
+    </div>
+    <div id="ConfigurationPizzas"></div>
+    <script src="./models/Pizza.model.js"></script>
+    <script src="./services/Pizza.service.js"></script>
+    <script src="./services/ShoppingCart.js"></script>
+    <script src="./views/Pizza.view.js"></script>
+    <script src="./controllers/Pizza.controller.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
