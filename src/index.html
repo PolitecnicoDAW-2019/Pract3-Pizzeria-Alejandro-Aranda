@@ -21,9 +21,35 @@
       <div class="total">
         <h3>Total :</h3>
         <h3 id="totalPrice">0</h3>
+        <h3>€</h3>
       </div>
     </div>
-    <div id="ConfigurationPizzas"></div>
+    <div id="CustomPizzas">
+      <img src="./assests/base.png">
+      <h1>Custom</h1>
+        <div id="size">
+          <input type="radio" id="sizeChoice1"
+     name="size" class="sizeCustom" value="small">
+    <label for="sizeChoice1">Small</label>
+
+    <input type="radio" id="sizeChoice2"
+     name="size" class="sizeCustom" value="medium">
+    <label for="sizeChoice2">Medium</label>
+
+    <input type="radio" id="sizeChoice3"
+     name="size" class="sizeCustom" value="big">
+    <label for="sizeChoice3">Big</label>
+  </div>
+  <div id="ingredients"></div>
+        <h1 id="priceCustom">0</h1>
+        <div id="panelIngredients">
+          <div id="ingredientsSelected">
+            <div id="list"></div>
+          </div>
+          <button id="addPizza">Add</button>
+        </div>
+      </div>
+    </div>
     <script src="./models/Pizza.model.js"></script>
     <script src="./services/Pizza.service.js"></script>
     <script src="./services/ShoppingCart.js"></script>
