@@ -1,36 +1,31 @@
 class Pizza {
-  constructor(ingredients) {
-    this.name;
+  constructor({ ingredients = [], name = '', price = 0, size = '' }) {
+    this.name = name;
     this.ingredients = ingredients;
-    this.price = 0;
-    this.size;
+    this.price = price;
+    this.size = size;
   }
 
-  calculateTotalPrice = () => {
+  calculateTotalPriceWithIngredients = () => {
     const priceOnBaseSize = {
-      noBase: { priceBase: 0, priceIngredients: 1 },
       small: { priceBase: 3, priceIngredients: 1 },
       medium: { priceBase: 5, priceIngredients: 1.1 },
       big: { priceBase: 7, priceIngredients: 1.2 }
     };
-    this.setCustomName();
-    return this.totalPrice(priceOnBaseSize[this.size]);
+    this.name = this.createCustomName();
+    const { priceBase, priceIngredients } = { ...priceOnBaseSize[this.size] };
+    return (this.price = priceBase + this.calculatePriceOfIngredients(priceIngredients)).toFixed(2);
   };
 
-  totalPrice = ({ priceBase, priceIngredients }) => {
-    this.price = priceBase + this.calculateIngredients(priceIngredients);
-    return this.price.toFixed(2);
-  };
-
-  calculateIngredients = priceIngredients => {
+  calculatePriceOfIngredients = priceIngredients => {
     return this.ingredients.reduce((total, { price }) => {
       total += price * priceIngredients;
       return total;
     }, 0);
   };
 
-  setCustomName = () => {
-    this.name = this.ingredients.reduce((customName, { name }) => {
+  createCustomName = () => {
+    return this.ingredients.reduce((customName, { name }) => {
       customName += name;
       return customName;
     }, 'Custom');
