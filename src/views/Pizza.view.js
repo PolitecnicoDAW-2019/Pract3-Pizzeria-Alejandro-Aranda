@@ -92,7 +92,7 @@ class PizzaView {
     pizzaSize.textContent = pizza.size;
     pizzaSize.className = 'pizzaSize';
     const buttonDeletePizza = document.createElement('button');
-    buttonDeletePizza.textContent = 'Delete';
+    buttonDeletePizza.textContent = 'X';
     buttonDeletePizza.onclick = () => this.deletePizzaFromShoppingCart(pizza);
 
     pizzaRow.appendChild(pizzaName);
