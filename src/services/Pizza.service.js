@@ -1,8 +1,4 @@
 class PizzaService {
   constructor() {}
-  readJson = json => {
-    return fetch(json).then(response => {
-      return response.json();
-    });
-  };
+  readJson = json => fetch(json).then(response => response.json());
 }
