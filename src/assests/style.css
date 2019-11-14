@@ -21,7 +21,7 @@ body {
   margin: 0 110px 5px 0;
 }
 
-.pizzaContent button,
+button,
 #addPizza {
   box-shadow: inset 0px 39px 0px -24px #e67a73;
   background-color: #e4685d;
@@ -48,10 +48,9 @@ body {
 
 #ShoppingCart {
   margin-top: -250px;
-  width: 680px;
+  width: 790px;
   height: auto;
   padding-bottom: 20px;
-  background: #c53030;
   border-radius: 6px;
   position: relative;
   float: right;
@@ -65,10 +64,9 @@ h1 {
   font-weight: 100;
 }
 #productList {
-  background-color: #ffffff;
-  width: 630px;
+  width: 790px;
   height: auto;
-  margin-left: 22px;
+  padding-right: 222px;
   border-radius: 6px;
 }
 #productList div {
@@ -79,13 +77,8 @@ h1 {
   display: inline;
 }
 .total {
-  margin-left: 550px;
+  margin-left: 530px;
   margin-top: 30px;
-}
-
-.titleLabels div {
-  display: inline;
-  margin-left: 100px;
 }
 
 .pizzaSize {
@@ -93,7 +86,7 @@ h1 {
 }
 
 .pizzaName {
-  margin-left: 60px;
+  margin-left: 40px;
 }
 
 .pizzaPrice {
@@ -101,7 +94,8 @@ h1 {
 }
 
 #pizzaCount {
-  margin-left: 130px;
+  margin-left: 110px;
+  margin-right: 20px;
 }
 
 #CustomPizzas {
