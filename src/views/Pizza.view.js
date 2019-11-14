@@ -6,7 +6,7 @@ class PizzaView {
     this.pizza = new Pizza([]);
   }
   DOMPreConfigure = {
-    pizzaPreConfigure: document.getElementById('PizzaPreConfigure')
+    pizzasPreConfigured: document.getElementById('PizzaPreConfigured')
   };
   DOMShoppingCart = {
     shoppingCart: document.getElementById('productList'),
@@ -20,30 +20,28 @@ class PizzaView {
     panelIngredientsSelected: document.getElementById('ingredientsSelected'),
     panelCustom: document.getElementById('panelIngredients')
   };
-  listIngredients = [];
-  ingredientsSelected = [];
 
   bindPizzaPre = handler => {
-    return handler('data/PizzaPreConfigure.json').then(Json => {
-      const pizzaMenu = Json.reduce((pizzasPre, { name, priceList, image }) => {
+    return handler('data/PizzaPreConfigured.json').then(Json => {
+      const pizzaMenu = Json.reduce((pizzas, { name, priceList, image }) => {
         const pizzaContent = document.createElement('div');
         pizzaContent.className = 'pizzaContent';
         this.createPizzaImage(pizzaContent, image);
         const pizzaName = document.createElement('p');
         pizzaName.textContent = name;
-        pizzaContent.append(pizzaName);
-        pizzaContent.append(this.createButtonsPrice(priceList, name));
-        pizzasPre.append(pizzaContent);
-        return pizzasPre;
+        pizzaContent.appendChild(pizzaName);
+        pizzaContent.appendChild(this.createButtonsPrice(priceList, name));
+        pizzas.appendChild(pizzaContent);
+        return pizzas;
       }, document.createElement('div'));
-      this.DOMPreConfigure.pizzaPreConfigure.append(pizzaMenu);
+      this.DOMPreConfigure.pizzasPreConfigured.appendChild(pizzaMenu);
     });
   };
 
-  createPizzaImage = (pizzasPre, image) => {
+  createPizzaImage = (pizzas, image) => {
     const pizzaImage = document.createElement('img');
     pizzaImage.src = image;
-    pizzasPre.append(pizzaImage);
+    pizzas.appendChild(pizzaImage);
   };
 
   bindAddPizzaToShoppingCart = handler => {
@@ -57,7 +55,7 @@ class PizzaView {
     this.deletePizzaFromShoppingCart = pizza => {
       this.DOMShoppingCart.totalPriceShopping.textContent = handler(pizza);
       const countPizza = this.existPizzaInShoppingCart(pizza);
-      +countPizza.textContent === 1 ? countPizza.parentElement.remove() : (countPizza.innerText = +countPizza.textContent - 1);
+      countPizza.textContent == 1 ? countPizza.parentElement.remove() : (countPizza.innerText = +countPizza.textContent - 1);
     };
   };
   createButtonsPrice = (priceList, name) => {
@@ -65,8 +63,8 @@ class PizzaView {
       const button = document.createElement('button');
       button.textContent = `${size}:${price}€`;
       button.className = 'buttonPrice';
-      button.onclick = () => this.addPizzaToShoppingCart({ name: name, size: size, price: price });
-      buttonWithPrice.append(button);
+      button.onclick = () => this.addPizzaToShoppingCart(new Pizza({ name: name, size: size, price: price }));
+      buttonWithPrice.appendChild(button);
       return buttonWithPrice;
     }, document.createElement('div'));
   };
@@ -97,12 +95,12 @@ class PizzaView {
     buttonDeletePizza.textContent = 'Delete';
     buttonDeletePizza.onclick = () => this.deletePizzaFromShoppingCart(pizza);
 
-    pizzaRow.append(pizzaName);
-    pizzaRow.append(pizzaSize);
-    pizzaRow.append(pizzaPrice);
-    pizzaRow.append(pizzaCount);
-    pizzaRow.append(buttonDeletePizza);
-    this.DOMShoppingCart.shoppingCart.append(pizzaRow);
+    pizzaRow.appendChild(pizzaName);
+    pizzaRow.appendChild(pizzaSize);
+    pizzaRow.appendChild(pizzaPrice);
+    pizzaRow.appendChild(pizzaCount);
+    pizzaRow.appendChild(buttonDeletePizza);
+    this.DOMShoppingCart.shoppingCart.appendChild(pizzaRow);
   };
 
   findPizzaCount = pizza => [...pizza.childNodes].find(({ id }) => id === 'pizzaCount');
@@ -110,15 +108,15 @@ class PizzaView {
   createIngredients = handler => {
     return handler('data/Ingredients.json').then(Json => {
       Json.reduce((listIngredients, ingredient) => {
-        this.listIngredients = [...this.listIngredients, ingredient];
         const checkBoxIngredient = document.createElement('input');
         checkBoxIngredient.type = 'checkbox';
         checkBoxIngredient.className = 'listIngredients';
         checkBoxIngredient.id = ingredient.name;
+        checkBoxIngredient.onclick = () => this.AddOrDeleteIngredientsFromPizza(ingredient);
         const labelIngredients = document.createElement('label');
-        labelIngredients.append(ingredient.name);
-        listIngredients.append(checkBoxIngredient);
-        listIngredients.append(labelIngredients);
+        labelIngredients.textContent = ingredient.name;
+        listIngredients.appendChild(checkBoxIngredient);
+        listIngredients.appendChild(labelIngredients);
         return listIngredients;
       }, this.DOMCustomPizza.divIngredients);
     });
@@ -126,27 +124,20 @@ class PizzaView {
   bindChangeSize = () => {
     for (const size of this.DOMCustomPizza.sizesCustom) {
       size.addEventListener('click', () => {
-        const radio = [...this.DOMCustomPizza.sizesCustom].find(radioButtons => radioButtons.checked);
-        this.pizza.ingredients = this.ingredientsSelected;
-        this.pizza.size = radio.value;
-        this.DOMCustomPizza.priceCustom.textContent = this.pizza.calculateTotalPrice();
+        const sizeOfCustomPizza = [...this.DOMCustomPizza.sizesCustom].find(radioButtonsSize => radioButtonsSize.checked);
+        this.pizza.size = sizeOfCustomPizza.value;
+        this.DOMCustomPizza.priceCustom.textContent = this.pizza.calculateTotalPriceWithIngredients();
       });
     }
   };
-  bindIngredients = () => {
-    const allIngredients = document.getElementsByClassName('listIngredients');
-    for (const ingredient of allIngredients) {
-      ingredient.addEventListener('click', () => {
-        const selected = [...allIngredients].reduce((checkBoxsId, ingredient) => {
-          return ingredient.checked ? [...checkBoxsId, ingredient.id] : checkBoxsId;
-        }, []);
-        this.ingredientsSelected = this.listIngredients.filter(ingredient => selected.includes(ingredient.name));
-        this.pizza.ingredients = this.ingredientsSelected;
-        const priceOfCustomPizza = this.checkIfSomeRadioButtonIsChecked() ? this.pizza.calculateTotalPrice() : 0;
-        this.DOMCustomPizza.priceCustom.textContent = priceOfCustomPizza;
-        this.updatingIngredientsPizzaCustom(selected);
-      });
-    }
+  AddOrDeleteIngredientsFromPizza = ingredient => {
+    const found = this.pizza.ingredients.find(({ name }) => name === ingredient.name);
+    found
+      ? this.pizza.ingredients.splice(this.pizza.ingredients.indexOf(found), 1)
+      : (this.pizza.ingredients = [...this.pizza.ingredients, ingredient]);
+    const priceOfCustomPizza = this.checkIfSomeRadioButtonIsChecked() ? this.pizza.calculateTotalPriceWithIngredients() : 0;
+    this.DOMCustomPizza.priceCustom.textContent = priceOfCustomPizza;
+    this.updatingIngredientsPizzaCustom(this.pizza.ingredients);
   };
 
   bindAddPizzaCustom = handler => {
@@ -160,15 +151,15 @@ class PizzaView {
     return [...this.DOMCustomPizza.sizesCustom].some(size => size.checked);
   };
 
-  updatingIngredientsPizzaCustom = selected => {
+  updatingIngredientsPizzaCustom = ingredientsSelected => {
     document.getElementById('list').remove();
-    const listIngredients = selected.reduce((ingredientsSelected, ingredients) => {
+    const listPizzaIngredients = ingredientsSelected.reduce((_ingredientsSelected, { name }) => {
       const ingredientAdded = document.createElement('h5');
-      ingredientAdded.textContent = ingredients;
-      ingredientsSelected.append(ingredientAdded);
-      return ingredientsSelected;
+      ingredientAdded.textContent = name;
+      _ingredientsSelected.appendChild(ingredientAdded);
+      return _ingredientsSelected;
     }, document.createElement('div'));
-    listIngredients.id = 'list';
-    this.DOMCustomPizza.panelIngredientsSelected.append(listIngredients);
+    listPizzaIngredients.id = 'list';
+    this.DOMCustomPizza.panelIngredientsSelected.appendChild(listPizzaIngredients);
   };
 }
