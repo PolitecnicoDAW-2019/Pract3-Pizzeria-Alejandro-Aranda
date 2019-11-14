@@ -3,24 +3,24 @@ class PizzaController {
     this.pizzaService = pizzaService;
     this.shoppingCartService = shoppingCartService;
     this.view = view;
-    this.view.bindAddPizzaToShoppingCart(this.handleAddNewPizza);
-    this.view.bindPizzaPre(this.handlePizzaPre);
-    this.view.createIngredients(this.handleIngredientsJson).then(() => this.view.bindIngredients());
+    this.view.bindAddPizzaToShoppingCart(this.handlerAddNewPizza);
+    this.view.bindPizzaPre(this.handlerPizzaPreConfigured);
+    this.view.createIngredients(this.handlerIngredientsJson);
     this.view.bindChangeSize();
-    this.view.bindAddPizzaCustom(this.handleAddNewPizza);
+    this.view.bindAddPizzaCustom(this.handlerAddNewPizza);
     this.view.bindDeletePizzaFromShoppingCart(this.handlerDeletePizzaFromShoppingCart);
   }
-  handlePizzaPre = jsonPizza => {
+  handlerPizzaPreConfigured = jsonPizza => {
     return this.pizzaService.readJson(jsonPizza);
   };
 
-  handleAddNewPizza = pizza => {
-    return this.shoppingCartService.addNewPricePizza(pizza);
+  handlerAddNewPizza = pizza => {
+    return this.shoppingCartService.addNewPricePizza(pizza).toFixed(2);
   };
 
-  handleIngredientsJson = jsonIngredients => {
+  handlerIngredientsJson = jsonIngredients => {
     return this.pizzaService.readJson(jsonIngredients);
   };
 
-  handlerDeletePizzaFromShoppingCart = (pizza, shoppingCart) => this.shoppingCartService.deletePizzaFromShoppingCart(pizza);
+  handlerDeletePizzaFromShoppingCart = pizza => this.shoppingCartService.deletePizzaFromShoppingCart(pizza);
 }
