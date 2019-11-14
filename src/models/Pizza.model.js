@@ -26,7 +26,7 @@ class Pizza {
 
   createCustomName = () => {
     return this.ingredients.reduce((customName, { name }) => {
-      customName += name;
+      customName += `\n${name}`;
       return customName;
     }, 'Custom');
   };
